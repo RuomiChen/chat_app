@@ -1,5 +1,8 @@
+import 'package:chat_app/controllers/auth_controller.dart';
+import 'package:chat_app/routes/app_routes.dart';
 import 'package:chat_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -31,20 +34,20 @@ class _SplashViewState extends State<SplashView>
     _animationController.forward();
 
     // check
-    // _checkAuthAndNavigate();
+    _checkAuthAndNavigate();
     //will implement check if logged in auth controller in upcoming videos.
   }
 
-  // void _checkAuthAndNavigate() async {
-  //   await Future.delayed(Duration(seconds: 2));
-  //   final authController = Get.put(AuthController(), permanent: true);
-  //   await Future.delayed(Duration(milliseconds: 500));
-  //   if (authController.isAuthenticated) {
-  //     Get.offAllNamed(AppRoutes.main);
-  //   } else {
-  //     Get.offAndToNamed(AppRoutes.login);
-  //   }
-  // }
+  void _checkAuthAndNavigate() async {
+    await Future.delayed(Duration(seconds: 2));
+    final authController = Get.put(AuthController(), permanent: true);
+    await Future.delayed(Duration(milliseconds: 500));
+    if (authController.isAuthenticated) {
+      Get.offAllNamed(AppRoutes.main);
+    } else {
+      Get.offAndToNamed(AppRoutes.login);
+    }
+  }
 
   @override
   void dispose() {
@@ -97,13 +100,6 @@ class _SplashViewState extends State<SplashView>
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
-                    ),
-                    SizedBox(height: 32),
-                    Text(
-                      'Connec with Friends Instantly',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.white.withOpacity(0.8),
-                      ),
                     ),
                     SizedBox(height: 32),
                     Text(

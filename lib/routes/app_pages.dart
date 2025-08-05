@@ -1,15 +1,17 @@
 import 'package:chat_app/routes/app_routes.dart';
-import 'package:chat_app/views/auth/splash_view.dart';
+import 'package:chat_app/views/auth/login_view.dart';
+import 'package:chat_app/views/auth/register_view.dart';
+import 'package:chat_app/views/splash_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppPages {
-  static const initial = AppRoutes.splash;
+  static const initial = AppRoutes.login;
 
   static final routes = [
     GetPage(name: AppRoutes.splash, page: () => const SplashView()),
-    // GetPage(name: AppRoutes.login, page: ()=>const LoginView()),
-    // GetPage(name: AppRoutes.register, page: ()=>const RegisterView()),
+    GetPage(name: AppRoutes.login, page: ()=>const LoginView()),
+    GetPage(name: AppRoutes.register, page: ()=>const RegisterView()),
     // GetPage(name: AppRoutes.forgotPassword, page: ()=>const ForgotPasswordView()),
     // GetPage(name: AppRoutes.changePassword, page: ()=>const ChangePasswordView()),
     // GetPage(name: AppRoutes.home, page: ()=>const HomeView()),
