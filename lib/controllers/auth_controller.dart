@@ -31,8 +31,8 @@ class AuthController extends GetxController {
         Get.offAllNamed(AppRoutes.login);
       }
     } else {
-      if (Get.currentRoute != AppRoutes.main) {
-        Get.offAllNamed(AppRoutes.main);
+      if (Get.currentRoute != AppRoutes.profile) {
+        Get.offAllNamed(AppRoutes.profile);
       }
     }
     if (!_isinitialized.value) {
@@ -44,7 +44,7 @@ class AuthController extends GetxController {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       _user.value = currentUser;
-      Get.offAllNamed(AppRoutes.main);
+      Get.offAllNamed(AppRoutes.profile);
     } else {
       Get.offAllNamed(AppRoutes.login);
     }
@@ -61,7 +61,7 @@ class AuthController extends GetxController {
       );
       if (userModel != null) {
         _userModel.value = userModel;
-        Get.offAllNamed(AppRoutes.main);
+        Get.offAllNamed(AppRoutes.profile);
       }
     } catch (e) {
       _error.value = e.toString();
@@ -82,7 +82,7 @@ class AuthController extends GetxController {
       );
       if (userModel != null) {
         _userModel.value = userModel;
-        Get.offAllNamed(AppRoutes.main);
+        Get.offAllNamed(AppRoutes.profile);
       }
     } catch (e) {
       _error.value = e.toString();

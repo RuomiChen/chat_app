@@ -1,9 +1,11 @@
+import 'package:chat_app/controllers/profile_controller.dart';
 import 'package:chat_app/routes/app_routes.dart';
+import 'package:chat_app/views/auth/forgot_password_view.dart';
 import 'package:chat_app/views/auth/login_view.dart';
 import 'package:chat_app/views/auth/register_view.dart';
+import 'package:chat_app/views/profile_view.dart';
 import 'package:chat_app/views/splash_view.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppPages {
   static const initial = AppRoutes.login;
@@ -12,11 +14,13 @@ class AppPages {
     GetPage(name: AppRoutes.splash, page: () => const SplashView()),
     GetPage(name: AppRoutes.login, page: ()=>const LoginView()),
     GetPage(name: AppRoutes.register, page: ()=>const RegisterView()),
-    // GetPage(name: AppRoutes.forgotPassword, page: ()=>const ForgotPasswordView()),
+    GetPage(name: AppRoutes.forgotPassword, page: ()=>const ForgotPasswordView()),
     // GetPage(name: AppRoutes.changePassword, page: ()=>const ChangePasswordView()),
     // GetPage(name: AppRoutes.home, page: ()=>const HomeView()),
     // GetPage(name: AppRoutes.main, page: ()=>const MainView()),
-    // GetPage(name: AppRoutes.profile, page: ()=>const ProfileView()),
+    GetPage(name: AppRoutes.profile, page: ()=>const ProfileView(),binding: BindingsBuilder((){
+      Get.put(ProfileController());
+    })),
     // GetPage(name: AppRoutes.chat, page: ()=>const ChatView()),
     // GetPage(name: AppRoutes.usersList, page: ()=>const UsersListView()),
     // GetPage(name: AppRoutes.friends, page: ()=>const FriendsView()),

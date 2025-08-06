@@ -151,6 +151,9 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   ),
                   validator: (value) {
+                     if (value == null || value.isEmpty) {
+                      return 'Please confirm your password';
+                    }
                     if (value!=_passwordController.text) {
                       return 'Passwords do not match';
                     }
@@ -166,9 +169,10 @@ class _RegisterViewState extends State<RegisterView> {
                           ? null
                           : () {
                               if (_formKey.currentState?.validate() ?? false) {
-                                _authController.signInWithEmailAndPassword(
+                                _authController.registerWithEmailAndPassword(
                                   _emailController.text.trim(),
                                   _passwordController.text,
+                                  _displayNameController.text
                                 );
                               }
                             },
@@ -185,18 +189,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.forgotPassword);
-                    },
-                    child: Text(
-                      'Forgor Password?',
-                      style: TextStyle(color: AppTheme.primaryColor),
-                    ),
-                  ),
-                ),
+               
                 SizedBox(height: 32),
                 Row(
                   children: [
@@ -216,13 +209,13 @@ class _RegisterViewState extends State<RegisterView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account?",
+                      "Already have an account?",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     GestureDetector(
-                      onTap: () => Get.toNamed(AppRoutes.register),
+                      onTap: () => Get.toNamed(AppRoutes.login),
                       child: Text(
-                        'Sign Up',
+                        'Sign In',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: AppTheme.primaryColor,
                           fontWeight: FontWeight.w600,

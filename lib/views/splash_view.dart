@@ -43,7 +43,7 @@ class _SplashViewState extends State<SplashView>
     final authController = Get.put(AuthController(), permanent: true);
     await Future.delayed(Duration(milliseconds: 500));
     if (authController.isAuthenticated) {
-      Get.offAllNamed(AppRoutes.main);
+      Get.offAllNamed(AppRoutes.profile);
     } else {
       Get.offAndToNamed(AppRoutes.login);
     }
