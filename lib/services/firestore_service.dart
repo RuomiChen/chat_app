@@ -32,6 +32,7 @@ class FirestoreService {
           .collection('users')
           .doc(userId)
           .get();
+          print(doc);
       if (doc.exists) {
         await _firestore.collection('users').doc(userId).update({
           'isOnline': isOnline,

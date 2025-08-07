@@ -35,10 +35,15 @@ class ProfileController extends GetxController {
 
   void _loadUserData() {
     final currentUserId = _authController.user?.uid;
+      print('currentUserId');
+      print(currentUserId);
 
     if (currentUserId != null) {
       _currentUser.bindStream(_firestoreService.getUserStream(currentUserId));
       ever(_currentUser, (UserModel? user) {
+      print('user');
+      print(user?.toMap());
+
         if (user != null) {
           displayNameController.text = user.displayName;
           emailController.text = user.email;
@@ -102,7 +107,7 @@ class ProfileController extends GetxController {
             ),
             TextButton(
               onPressed: () => Get.back(result: true),
-              style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
+              style: TextButton.styleFrom(backgroundColor: Colors.redAccent),
               child: Text('Delete', style: TextStyle(color: Colors.white)),
             ),
           ],

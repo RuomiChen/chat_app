@@ -17,8 +17,12 @@ class AuthService {
         email: email,
         password: password,
       );
+      print('sign result');
+      print(result);
+
       User? user = result.user;
       if (user != null) {
+        print('update user online status');
         await _firebaseService.updateUserOnlineStatus(user.uid, true);
         return await _firebaseService.getUser(user.uid);
       }
@@ -68,33 +72,28 @@ class AuthService {
       );
     }
   }
-  Future<void>signOut() async{
-    try {
-      if(currentUser!=null){
-        await _firebaseService.updateUserOnlineStatus(currentUserId!,false);
 
+  Future<void> signOut() async {
+    try {
+      if (currentUser != null) {
+        await _firebaseService.updateUserOnlineStatus(currentUserId!, false);
       }
       await _auth.signOut();
     } catch (e) {
-      throw Exception(
-        'Failed To Sign Out: ${e.toString()}',
-      );
-      
+      throw Exception('Failed To Sign Out: ${e.toString()}');
     }
   }
-    Future<void>deleteAccount() async{
+
+  Future<void> deleteAccount() async {
     try {
       User? user = _auth.currentUser;
-      if(user!=null){
+      if (user != null) {
         await _firebaseService.deleteUser(user.uid);
         await user.delete();
       }
       await _auth.signOut();
     } catch (e) {
-      throw Exception(
-        'Failed To Delete Account: ${e.toString()}',
-      );
-      
+      throw Exception('Failed To Delete Account: ${e.toString()}');
     }
   }
 }

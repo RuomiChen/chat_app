@@ -113,14 +113,147 @@ class ProfileView extends GetView<ProfileController> {
                           : AppTheme.textSecondaryColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 8,
+                          width: 8,
+                          decoration: BoxDecoration(
+                            color: user.isOnline
+                                ? AppTheme.successColor
+                                : AppTheme.textSecondaryColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          user.isOnline ? 'Online' : 'Offline',
+                          style: Theme.of(Get.context!).textTheme.bodySmall
+                              ?.copyWith(
+                                color: user.isOnline
+                                    ? AppTheme.successColor
+                                    : AppTheme.textSecondaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    controller.getJoinedDate(),
+                    style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.textSecondaryColor,
+                    ),
                   ),
                 ],
+              ),
+              SizedBox(height: 32),
+              Obx(
+                () => Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Personal Information",
+                          style: Theme.of(Get.context!).textTheme.headlineSmall
+                              ?.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        SizedBox(height: 20),
+                        TextFormField(
+                          controller: controller.displayNameController,
+                          enabled: controller.isEditing,
+                          decoration: InputDecoration(
+                            labelText: 'Display Name',
+                            prefixIcon: Icon(Icons.person_outline),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.emailController,
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            prefixIcon: Icon(Icons.email_outlined),
+                            helperText: 'Email can\'t be changed',
+                          ),
+                        ),
+                        if (controller.isEditing) ...[
+                          SizedBox(height: 20),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: controller.isLoading
+                                  ? null
+                                  : controller.updateProfile,
+                              child: controller.isLoading
+                                  ? SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Text('Save Changes'),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 32),
+              Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: Icon(
+                        Icons.security,
+                        color: AppTheme.primaryColor,
+                      ),
+                      title: Text('Change Password'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      onTap: () => Get.toNamed('/change-password'),
+                    ),
+                    Divider(height: 1, color: Colors.grey),
+                    ListTile(
+                      leading: Icon(
+                        Icons.delete_forever,
+                        color: AppTheme.errorColor,
+                      ),
+                      title: Text('Delete Account'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      onTap: controller.deleteAccount,
+                    ),
+                    Divider(height: 1, color: Colors.grey),
+                    ListTile(
+                      leading: Icon(Icons.logout, color: AppTheme.errorColor),
+                      title: Text('Sign Out'),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      onTap: controller.signOut,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Chat App v1.0.0',
+                style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(
+                  color: AppTheme.textSecondaryColor,
+                ),
               ),
             ],
           ),
         );
       }),
-      
     );
   }
 
