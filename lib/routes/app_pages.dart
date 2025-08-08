@@ -3,7 +3,8 @@ import 'package:chat_app/routes/app_routes.dart';
 import 'package:chat_app/views/auth/forgot_password_view.dart';
 import 'package:chat_app/views/auth/login_view.dart';
 import 'package:chat_app/views/auth/register_view.dart';
-import 'package:chat_app/views/profile_view.dart';
+import 'package:chat_app/views/profile/change_password_view.dart';
+import 'package:chat_app/views/profile/profile_view.dart';
 import 'package:chat_app/views/splash_view.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class AppPages {
     GetPage(name: AppRoutes.login, page: ()=>const LoginView()),
     GetPage(name: AppRoutes.register, page: ()=>const RegisterView()),
     GetPage(name: AppRoutes.forgotPassword, page: ()=>const ForgotPasswordView()),
-    // GetPage(name: AppRoutes.changePassword, page: ()=>const ChangePasswordView()),
+    GetPage(name: AppRoutes.changePassword, page: ()=>const ChangePasswordView()),
     // GetPage(name: AppRoutes.home, page: ()=>const HomeView()),
     // GetPage(name: AppRoutes.main, page: ()=>const MainView()),
     GetPage(name: AppRoutes.profile, page: ()=>const ProfileView(),binding: BindingsBuilder((){
