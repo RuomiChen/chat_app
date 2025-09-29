@@ -329,7 +329,7 @@ class FirestoreService {
     }
   }
 
-  Stream<List<FriendshipModel>> getFriendStream(String userId) {
+  Stream<List<FriendshipModel>> getFriendsStream(String userId) {
     return _firestore
         .collection('friendships')
         .where('user1Id', isEqualTo: userId)
@@ -343,7 +343,7 @@ class FirestoreService {
           List<FriendshipModel> friendships = [];
           for (var doc in snapshot1.docs) {
             friendships.add(
-              FriendshipModel.fromMap(doc.data() as Map<String, dynamic>),
+              FriendshipModel.fromMap(doc.data()),
             );
           }
 
