@@ -18,7 +18,7 @@ class _RegisterViewState extends State<RegisterView> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = Get.put<AuthController>(AuthController());
   bool _obsecurePassword = true;
   bool _obsecureConfirmPassword = true;
 

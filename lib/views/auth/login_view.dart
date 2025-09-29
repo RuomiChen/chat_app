@@ -15,7 +15,7 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = Get.put<AuthController>(AuthController());
   bool _obsecurePassword = true;
 
   @override

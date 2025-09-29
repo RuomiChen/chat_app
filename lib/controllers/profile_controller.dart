@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   final FirestoreService _firestoreService = FirestoreService();
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = Get.put<AuthController>(AuthController());
+
   final TextEditingController displayNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 

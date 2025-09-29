@@ -22,7 +22,7 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
     _user.bindStream(_authService.authStateChanges);
-    // ever(_user, _handleAuthStateChange);
+    ever(_user, _handleAuthStateChange);
   }
 
   void _handleAuthStateChange(User? user) {
@@ -31,8 +31,8 @@ class AuthController extends GetxController {
         Get.offAllNamed(AppRoutes.login);
       }
     } else {
-      if (Get.currentRoute != AppRoutes.profile) {
-        Get.offAllNamed(AppRoutes.profile);
+      if (Get.currentRoute != AppRoutes.main) {
+        Get.offAllNamed(AppRoutes.main);
       }
     }
     if (!_isinitialized.value) {
@@ -61,7 +61,7 @@ class AuthController extends GetxController {
       );
       if (userModel != null) {
         _userModel.value = userModel;
-        Get.offAllNamed(AppRoutes.profile);
+        Get.offAllNamed(AppRoutes.main);
       }
     } catch (e) {
       _error.value = e.toString();

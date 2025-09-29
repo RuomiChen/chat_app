@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePasswordController extends GetxController {
-  final AuthController _authController = Get.find<AuthController>();
+  final AuthController _authController = Get.put<AuthController>(AuthController());
   final TextEditingController currentPasswordController =
       TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
