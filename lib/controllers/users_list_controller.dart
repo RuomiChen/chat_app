@@ -69,6 +69,7 @@ class UsersListController extends GetxController {
           .where((user) => user.id != currentUserId)
           .toList();
       if (_searchQuery.isEmpty) {
+        print({'other': otherUsers.obs});
         _filteredUsers.value = otherUsers.obs;
       } else {
         _filterUsers();
@@ -168,7 +169,7 @@ class UsersListController extends GetxController {
     _searchQuery.value = query;
   }
 
-  void clearSearchQuery() {
+  void clearSearch() {
     _searchQuery.value = '';
   }
 
@@ -201,6 +202,7 @@ class UsersListController extends GetxController {
     }
   }
 
+ 
   Future<void> cancelFriendRequest(UserModel user) async {
     try {
       _isLoading.value = true;
@@ -263,6 +265,39 @@ class UsersListController extends GetxController {
     }
   }
 
+ Future<void> declineFriendRequest(UserModel user) async {
+    try {
+      _isLoading.value = true;
+      final currentUserId = _authController.user?.uid;
+
+      if (currentUserId != null) {
+        final request = _receivedRequests.firstWhereOrNull(
+          (r) =>
+              r.senderId == user.id && r.status == FriendRequestStatus.pending,
+        );
+
+        if (request != null) {
+          _userRelationships[user.id] = UserRelationshipStatus.none;
+
+          await _firestoreService.respondToFriendRequest(
+            request.id,
+            FriendRequestStatus.declined,
+          );
+
+          Get.snackbar('Success', 'Friend Request Declined');
+        }
+      }
+    } catch (e) {
+      _userRelationships[user.id] = UserRelationshipStatus.friendRequestReceived;
+      _error.value = e.toString();
+      print("Error declining friend request: $e");
+      Get.snackbar('Error', 'Failed to decline friend request: $e');
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+
+
   Future<void> startChat(UserModel user) async {
     // Implement chat initiation logic here
     try {
@@ -306,7 +341,7 @@ class UsersListController extends GetxController {
   String getRelationshipButtonText(UserRelationshipStatus status) {
     switch (status) {
       case UserRelationshipStatus.none:
-        return 'Add Friend';
+        return 'Add';
       case UserRelationshipStatus.friendRequestSent:
         return 'Request sent';
       case UserRelationshipStatus.friendRequestReceived:

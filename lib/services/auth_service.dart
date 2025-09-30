@@ -57,7 +57,8 @@ class AuthService {
         await _firebaseService.createUser(userModel);
         return userModel;
       }
-      return null;
+      return null
+      ;
     } catch (e) {
       throw Exception('Failed To Sign In: ${e.toString()}');
     }

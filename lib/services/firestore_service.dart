@@ -33,17 +33,10 @@ class FirestoreService {
 
   Future<void> updateUserOnlineStatus(String userId, bool isOnline) async {
     try {
-      DocumentSnapshot doc = await _firestore
-          .collection('users')
-          .doc(userId)
-          .get();
-      print(doc);
-      if (doc.exists) {
-        await _firestore.collection('users').doc(userId).update({
-          'isOnline': isOnline,
-          'lastSeen': DateTime.now(),
-        });
-      }
+      await _firestore.collection('users').doc(userId).update({
+        'isOnline': isOnline,
+        'lastSeen': DateTime.now(),
+      });
     } catch (e) {
       throw Exception('Failed To Update User Online Status: ${e.toString()}');
     }
@@ -342,9 +335,7 @@ class FirestoreService {
 
           List<FriendshipModel> friendships = [];
           for (var doc in snapshot1.docs) {
-            friendships.add(
-              FriendshipModel.fromMap(doc.data()),
-            );
+            friendships.add(FriendshipModel.fromMap(doc.data()));
           }
 
           for (var doc in snapshot2.docs) {
@@ -658,7 +649,7 @@ class FirestoreService {
       throw Exception('Failed To Edit Message: ${e.toString()}');
     }
   }
-  
+
   //notifications collection
   Future<void> createNotification(NotificationModel notification) async {
     try {
@@ -702,8 +693,7 @@ class FirestoreService {
           .where('isRead', isEqualTo: false)
           .get();
 
-          WriteBatch batch = _firestore.batch();
-
+      WriteBatch batch = _firestore.batch();
 
       for (var doc in snapshot.docs) {
         batch.update(doc.reference, {'isRead': true});
@@ -712,7 +702,8 @@ class FirestoreService {
       await batch.commit();
     } catch (e) {
       throw Exception(
-          'Failed To Mark All Notifications As Read: ${e.toString()}');
+        'Failed To Mark All Notifications As Read: ${e.toString()}',
+      );
     }
   }
 
@@ -739,9 +730,12 @@ class FirestoreService {
       WriteBatch batch = _firestore.batch();
 
       for (var doc in snapshot.docs) {
-        Map<String,dynamic> data = doc.data() as Map<String,dynamic>;
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-        if(data['data'] != null &&( data['data']['senderId'] == relatedUserId || data['data']['userId'] == relatedUserId || data['data']['userId'] == relatedUserId)){
+        if (data['data'] != null &&
+            (data['data']['senderId'] == relatedUserId ||
+                data['data']['userId'] == relatedUserId ||
+                data['data']['userId'] == relatedUserId)) {
           batch.delete(doc.reference);
         }
       }
@@ -749,7 +743,8 @@ class FirestoreService {
       await batch.commit();
     } catch (e) {
       throw Exception(
-          'Failed To Delete Notification By Type And User: ${e.toString()}');
+        'Failed To Delete Notification By Type And User: ${e.toString()}',
+      );
     }
   }
 
@@ -765,7 +760,8 @@ class FirestoreService {
       );
     } catch (e) {
       throw Exception(
-          'Failed To Remove Notification For Cancelled Request: ${e.toString()}');
+        'Failed To Remove Notification For Cancelled Request: ${e.toString()}',
+      );
     }
   }
 }
